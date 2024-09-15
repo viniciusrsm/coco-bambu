@@ -10,13 +10,19 @@ import { BookComponent } from '../book/book.component';
   standalone: true,
   imports: [MatGridListModule, BookComponent, NgFor],
   templateUrl: './book-grid.component.html',
-  styleUrl: './book-grid.component.css'
+  styleUrl: './book-grid.component.css',
 })
 export class BookGridComponent {
   bookInfoList: Book[] = [];
   bookFetchService: BookFetchService = inject(BookFetchService);
+  books: { [id: string]: any } = {};
 
   constructor() {
-    this.bookInfoList = this.bookFetchService.getAllBooks();
+    this.bookFetchService.getAllBooks('s').subscribe((res) => {
+      this.books = res.items.map((book: any) => book.volumeInfo);
+      //console.log(this.books);
+    });
+
+    //this.bookInfoList = this.bookFetchService.getAllBooks();
   }
 }
