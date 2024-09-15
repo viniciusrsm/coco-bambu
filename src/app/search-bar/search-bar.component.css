@@ -39,3 +39,24 @@ input[type="text"] {
     border-radius: 5px;
     outline: none;
 }
+.top-bar {
+    height: 100px;
+    width: 100vw;
+    background-color: #5D2E8C;
+    display: flex;
+    justify-content: center ;
+}
+.search-bar2 {
+    background-color: #5D2E8C;
+    color: white;
+    outline: none;
+    font-size: x-large;
+    width: 90%;
+}
+.search-bar2::placeholder {
+    color: wheat    ;
+}
+.search-button {
+    width: 10%;
+    color: white;
+}

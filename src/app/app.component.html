@@ -62,14 +62,9 @@
   }
 
   main {
-    width: 100%;
+    width: 100vw;
     min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    box-sizing: inherit;
-    position: relative;
+    
   }
 
   .angular-logo {
@@ -77,10 +72,9 @@
   }
 
   .content {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 700px;
+    
+    width: 100vw;
+    height: 100vh;
     margin-bottom: 3rem;
   }
 
@@ -180,9 +174,8 @@
 <main class="main">
   <div class="content">
     
-    <app-search-bar></app-search-bar>
-    <app-home></app-home>
-    <app-book-grid></app-book-grid>
+    <div style="margin-bottom: auto; width: 100vw;"><app-search-bar></app-search-bar></div>
+    <div style="width: 600px; top: auto;"><app-book-grid ></app-book-grid></div>
     <!-- <div class="left-side">
       <svg
         xmlns="http://www.w3.org/2000/svg"
