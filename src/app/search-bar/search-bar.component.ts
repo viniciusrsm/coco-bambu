@@ -83,7 +83,6 @@ export class SearchBarComponent implements OnInit {
                     book.volumeInfo.imageLinks?.thumbnail || '';
 
                   this.books[title] = [id, authors, desc, cover];
-                  this.booksReadySubject.next(true);
                   return {
                     id: id,
                     title: title,
@@ -93,11 +92,10 @@ export class SearchBarComponent implements OnInit {
                   };
                 })
               ),
-              tap((res) => {
+              tap(() => {
                 this.booksReadySubject.next(true);
               }),
               catchError((err) => {
-                console.error(err);
                 return '';
               })
             )
@@ -114,7 +112,6 @@ export class SearchBarComponent implements OnInit {
         }),
         take(1),
         tap(() => {
-          console.log(this.books);
           const dialogRef = this.dialog.open(BookDialog, {
             data: {
               id: this.books[title][0],

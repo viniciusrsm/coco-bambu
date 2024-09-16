@@ -1,11 +1,11 @@
 <mat-grid-list cols="3" rowHeight="1:1.5">
   <mat-grid-tile
-    style="cursor: pointer"
+    style="cursor: pointer; background-color: var(--coco-red)"
     *ngFor="let bookInfo of savedBooksService.savedBooks"
   >
     <app-book
       style="height: 100%; width: 100%"
-      (click)="teste(bookInfo)"
+      (click)="openBook(bookInfo)"
       [bookInfo]="bookInfo"
     ></app-book>
   </mat-grid-tile>

@@ -8,7 +8,6 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
   standalone: true,
   imports: [RouterOutlet, SearchBarComponent, BookGridComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'coco-bambu';
