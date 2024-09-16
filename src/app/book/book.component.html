@@ -1,9 +1,12 @@
 <div class="book-box">
   <div class="title">
-    {{ bookInfo.title }}
+    {{ bookInfo ? bookInfo.title : "" }}
   </div>
   <div class="cover">
-    <img style="width: 128px; height: 184px" src="{{ bookInfo.cover }}" />
+    <img
+      style="width: 128px; height: 184px"
+      src="{{ bookInfo ? bookInfo.cover : '' }}"
+    />
   </div>
   <!-- <div class="rate">{{ bookInfo.rate }} estrelas</div> -->
   <span class="star-span">

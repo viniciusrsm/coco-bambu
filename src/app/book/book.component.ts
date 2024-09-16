@@ -30,12 +30,15 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.bookInfo);
-    this.stars = Array(5)
-      .fill(0)
-      .map((x, i) => {
-        console.log(x, i);
-        return Number(this.bookInfo.rate) > i ? 1 : 0;
-      });
+
+    this.stars = this.bookInfo
+      ? Array(5)
+          .fill(0)
+          .map((x, i) => {
+            console.log(x, i);
+            return Number(this.bookInfo.rate) > i ? 1 : 0;
+          })
+      : Array(5).fill(0);
     console.log(this.stars);
   }
 }

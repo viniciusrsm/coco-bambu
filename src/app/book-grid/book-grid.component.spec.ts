@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideHttpClient } from '@angular/common/http';
 import { BookGridComponent } from './book-grid.component';
 
 describe('BookGridComponent', () => {
@@ -8,9 +9,9 @@ describe('BookGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BookGridComponent]
-    })
-    .compileComponents();
+      imports: [BookGridComponent],
+      providers: [provideHttpClient()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BookGridComponent);
     component = fixture.componentInstance;
