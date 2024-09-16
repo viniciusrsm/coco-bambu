@@ -1,7 +1,5 @@
-<mat-grid-tile>
-  <div style="display: flex; flex-direction: column; height: 85%;">
-    <p style="margin-bottom: auto;">{{bookInfo.name}}</p>
-    <img />
-    <p>estrelas</p>
-  </div>
-</mat-grid-tile>
+<div class="book" style="display: flex; flex-direction: column; height: 85%">
+  <p style="margin-bottom: auto">{{ bookInfo.title }}</p>
+  <img style="width: 128px; height: 184px" src="{{ bookInfo.cover }}" />
+  <p>{{ bookInfo.rate }} estrelas</p>
+</div>

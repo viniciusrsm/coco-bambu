@@ -1,7 +1,12 @@
-<mat-grid-list cols="3" rowHeight="1:1.5" >
-    <mat-grid-tile *ngFor="let bookInfo of bookInfoList">
-      <app-book
-          [bookInfo]="bookInfo"
-      ></app-book>
-    </mat-grid-tile>
-  </mat-grid-list>
+<mat-grid-list cols="3" rowHeight="1:1.5">
+  <mat-grid-tile
+    style="cursor: pointer"
+    *ngFor="let bookInfo of savedBooksService.savedBooks"
+  >
+    <app-book
+      style="height: 100%; width: 100%"
+      (click)="teste(bookInfo)"
+      [bookInfo]="bookInfo"
+    ></app-book>
+  </mat-grid-tile>
+</mat-grid-list>
