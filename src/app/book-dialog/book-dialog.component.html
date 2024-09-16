@@ -1,6 +1,10 @@
 <div class="dialog">
-  <h2 mat-dialog-title>{{ data.title }}</h2>
-  <h3 class="authors" mat-dialog-content>{{ data.title }}</h3>
+  <div class="dialog-title">
+    {{ data.title }}
+  </div>
+  <div class="authors">
+    {{ data.authors }}
+  </div>
   <span class="cover"><img src="{{ data.cover }}" /></span>
   <p>Deixe seu comentário sobre o livro!</p>
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
@@ -19,6 +23,8 @@
         <label for="star1" title="text">1 star</label>
       </div>
     </span>
-    <button type="submit">Enviar</button>
+    <span class="button-span">
+      <button type="submit">Avaliar!</button>
+    </span>
   </form>
 </div>

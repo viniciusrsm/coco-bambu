@@ -26,7 +26,7 @@ import { BookFetchService } from '../book-fetch.service';
 export interface DialogData {
   id: string;
   title: string;
-  author: string;
+  authors: string;
   desc: string;
   cover: string;
   comment: string;
@@ -47,27 +47,7 @@ export interface DialogData {
     MatAutocompleteModule,
     AsyncPipe,
   ],
-  template: `
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <input
-          type="text"
-          placeholder="Pesquisar livro"
-          matInput
-          [formControl]="myControl"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="openDialog($event.option.value)"
-        >
-          @for (book of filteredBooks | async; track book.id) {
-          <mat-option [value]="book.title">{{ book.title }}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
-  `,
+  templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent implements OnInit {

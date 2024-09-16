@@ -51,7 +51,7 @@ export class BookDialog {
     this.myForm = this.formBuilder.group({
       id: [this.data.id],
       title: [this.data.title],
-      author: [this.data.author],
+      authors: [this.data.authors],
       cover: [this.data.cover],
       desc: [this.data.desc],
       comment: [this.data.comment] || ['', Validators.required], // Campo 'name' com validação

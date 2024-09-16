@@ -1,4 +1,22 @@
 <form class="top-bar">
-  <input class="search-bar2" id="search" placeholder="Pesquisar livros..." autofocus required />
-  <button class="search-button" type="submit">Go</button>
+  <mat-form-field>
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Pesquisar livro"
+      matInput
+      [formControl]="myControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="openDialog($event.option.value)"
+    >
+      @for (book of filteredBooks | async; track book.id) {
+      <mat-option class="option" [value]="book.title">{{
+        book.title
+      }}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
 </form>

@@ -1,4 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --coco-yellow: rgb(206, 172, 99);
+  --coco-white: rgb(229, 228, 227);
+  --coco-red: rgb(68, 24, 13);
+  --coco-grey: rgb(105, 103, 102);
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  font-family: "Ubuntu", sans-serif;
+}

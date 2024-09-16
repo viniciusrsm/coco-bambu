@@ -6,13 +6,41 @@
 .dialog {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
+  box-sizing: border-box;
   height: 80vh;
   width: 50vw;
+  overflow: auto;
+}
+
+.dialog-title {
+  font-size: x-large;
+  font-weight: bold;
+  overflow: hidden;
+  display: -webkit-box;
+
+  line-height: 1.2em;
+  height: 2.4em;
+  min-height: 2.4em;
+  max-height: 2.4em;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .authors {
-  text-align: center;
+  overflow: hidden;
+  display: -webkit-box;
+  line-height: 1.2em;
+  height: 2.4em;
+  min-height: 2.4em;
+  max-height: 2.4em;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  font-size: medium;
+  color: var(--coco-grey);
 }
 
 .cover {
@@ -26,14 +54,47 @@ img {
   height: 184px;
 }
 
+p {
+  font-weight: 600;
+}
+
 .comment {
   height: 200px;
+  width: 100%;
   resize: none;
+  border: 1px solid var(--coco-red);
+  border-radius: 4px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.comment:focus {
+  outline: 1px solid var(--coco-red);
+}
+
+.button-span {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.button-span button {
+  border: none;
+  height: 40px;
+  width: 85px;
+  border-radius: 4px;
+  background-color: var(--coco-red);
+  color: var(--coco-white);
+  font-size: medium;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .rate-span {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .rate {
