@@ -1,27 +1,48 @@
-# CocoBambu
+# Livraria Coco Bambu
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.4.
+**Livraria Coco Bambu** foi desenvolvido baseado no Desafio Dev Full Stack no processo seletivo de estagiário do Coco Bambu. É um aplicativo web que utiliza a API do Google Books para buscar livros através de seus títulos ou autores, permitindo que usuários salvem livros e os avaliem através de um comentário e uma nota.
 
-## Development server
+## Funcionalidades
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Busca de livros:** Pesquise livros por título ou autor.
+- **Exibição detalhada:** Visualize informações detalhadas sobre cada livro, como título, autor, descrição e capa.
+- **Salvar livros:** Salve livros para avaliá-los ou para rever suas avaliações anteriores.
 
-## Code scaffolding
+## Tecnologias Utilizadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **[Angular](https://angular.io/):** Framework web usado para construir a aplicação.
+- **[Angular Material](https://material.angular.io/):** Biblioteca de componentes UI para fornecer uma interface de usuário moderna e responsiva.
+- **[RxJS](https://rxjs.dev/):** Biblioteca para programação reativa e manipulação de eventos assíncronos.
+- **[Google Books API](https://developers.google.com/books/docs/v1/getting_started):** API utilizada para buscar informações sobre livros.
+- **HTML5 & CSS:** Tecnologias usadas para estilizar e estruturar a interface da aplicação.
 
-## Build
+## Pré-requisitos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Antes de rodar o projeto, certifique-se de ter instalado o seguinte:
 
-## Running unit tests
+- **Node.js** (versão 12 ou superior)
+- **npm** (gerenciador de pacotes do Node.js)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Instalação e execução
 
-## Running end-to-end tests
+1. Clone o repositório para sua máquina local:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   ```bash
+   https://github.com/viniciusrsm/coco-bambu.git
+   ```
+   
+2. Execute o comando de primeira execução:
+    
+    ```bash
+   npm run first-run
+   ```
+   
+   
+- Este comando irá executar os dois comandos abaixo, que irão instalar todas as dependências e executar o projeto. Caso queira somente executar, utilizar o apenas o último comando
+   ```bash
+   npm install
+   ng serve
+   ```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Como contribuir
+- É possível contribuir ao projeto através de um Pull Request feito a partir de um fork da branch main.
