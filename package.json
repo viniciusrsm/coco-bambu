@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:coco-bambu": "node dist/coco-bambu/server/server.mjs",
-    "first-run": "concurrently \"npm install\" \"ng serve\""
+    "first-run": "npm install && ng serve"
   },
   "private": true,
   "dependencies": {

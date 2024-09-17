@@ -26,7 +26,7 @@ import { BookFetchService } from '../book-fetch.service';
 export interface DialogData {
   id: string;
   title: string;
-  author: string;
+  author: string[];
   desc: string;
   cover: string;
   comment: string;
@@ -72,7 +72,6 @@ export class SearchBarComponent implements OnInit {
         this.booksReadySubject.next(false);
       }),
       switchMap((value) => {
-        console.log(this.typeControl.getRawValue()!);
         return value
           ? this.bookFetchService
               .getAllBooks(value, this.typeControl.getRawValue()!)
