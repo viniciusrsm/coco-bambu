@@ -26,7 +26,7 @@ import { BookFetchService } from '../book-fetch.service';
 export interface DialogData {
   id: string;
   title: string;
-  authors: string;
+  author: string;
   desc: string;
   cover: string;
   comment: string;
@@ -51,60 +51,68 @@ export interface DialogData {
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent implements OnInit {
-  myControl = new FormControl('');
+  searchControl = new FormControl('');
+  typeControl = new FormControl('title');
   filteredBooks: Observable<Book[]> | undefined;
   books: { [key: string]: string[] } = {};
 
   private booksReadySubject = new BehaviorSubject<boolean>(false);
-  booksReady$ = this.booksReadySubject.asObservable();
 
   dialog = inject(MatDialog);
   bookFetchService: BookFetchService = inject(BookFetchService);
+  booksReady$ = this.booksReadySubject.asObservable();
 
   constructor() {}
 
   ngOnInit(): void {
-    this.filteredBooks = this.myControl.valueChanges.pipe(
+    this.filteredBooks = this.searchControl.valueChanges.pipe(
       startWith(''),
       tap(() => {
         this.books = {};
         this.booksReadySubject.next(false);
       }),
       switchMap((value) => {
+        console.log(this.typeControl.getRawValue()!);
         return value
-          ? this.bookFetchService.getAllBooks(value).pipe(
-              map((response) =>
-                response.items.slice(0, 4).map((book: any) => {
-                  let id: string = book.id;
-                  let title: string = book.volumeInfo.title;
-                  let authors: string = book.volumeInfo?.authors || '';
-                  let desc: string = book.volumeInfo?.description || '';
-                  let cover: string =
-                    book.volumeInfo.imageLinks?.thumbnail || '';
+          ? this.bookFetchService
+              .getAllBooks(value, this.typeControl.getRawValue()!)
+              .pipe(
+                map((response) => {
+                  return response.items.slice(0, 4).map((book: any) => {
+                    let id: string = book.id;
+                    let title: string = book.volumeInfo.title;
+                    let authors: string = book.volumeInfo?.authors || '';
+                    let desc: string = book.volumeInfo?.description || '';
+                    let cover: string =
+                      book.volumeInfo.imageLinks?.thumbnail || '';
 
-                  this.books[title] = [id, authors, desc, cover];
-                  return {
-                    id: id,
-                    title: title,
-                    authors: authors,
-                    desc: desc,
-                    cover: cover,
-                  };
+                    this.books[title] = [id, authors, desc, cover];
+                    return {
+                      id: id,
+                      title: title,
+                      authors: authors,
+                      desc: desc,
+                      cover: cover,
+                    };
+                  });
+                }),
+                tap(() => {
+                  this.booksReadySubject.next(true);
+                }),
+                catchError((err) => {
+                  console.error(err);
+                  return '';
                 })
-              ),
-              tap(() => {
-                this.booksReadySubject.next(true);
-              }),
-              catchError((err) => {
-                return '';
-              })
-            )
+              )
           : '';
       })
     );
   }
 
   openDialog(title: string): void {
+    this.typeControl.setValue('title');
+    this.searchControl.setValue(this.searchControl.value);
+
     this.booksReady$
       .pipe(
         filter((ready) => {
@@ -112,19 +120,18 @@ export class SearchBarComponent implements OnInit {
         }),
         take(1),
         tap(() => {
-          const dialogRef = this.dialog.open(BookDialog, {
-            data: {
-              id: this.books[title][0],
-              authors: this.books[title][1],
-              title: title,
-              desc: this.books[title][2],
-              cover: this.books[title][3],
-            },
-          });
-
-          dialogRef.afterClosed().subscribe((result) => {
-            this.booksReadySubject.next(false);
-          });
+          console.log(this.books[title][1]);
+          if (this.books[title]) {
+            this.dialog.open(BookDialog, {
+              data: {
+                id: this.books[title][0],
+                author: this.books[title][1],
+                title: title,
+                desc: this.books[title][2],
+                cover: this.books[title][3],
+              },
+            });
+          }
         })
       )
       .subscribe();

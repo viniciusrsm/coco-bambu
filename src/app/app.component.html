@@ -10,10 +10,13 @@
 
   .content {
     padding: 10px;
-    height: 100vh;
+    height: 100%;
     width: 100vw - 20px;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
 
@@ -34,10 +37,19 @@
     </h1>
   </div>
   <div class="content">
-    <div>
+    <div style="width: 300px">
       <app-search-bar></app-search-bar>
     </div>
-    <div style="width: 600px; top: auto"><app-book-grid></app-book-grid></div>
+    <div
+      style="
+        width: fit-content;
+        margin-top: 10px;
+        height: fit-content;
+        top: auto;
+      "
+    >
+      <app-book-grid></app-book-grid>
+    </div>
   </div>
 </main>
 <router-outlet />

@@ -17,6 +17,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Book } from '../book';
 import { SavedBooksService } from '../saved-books.service';
 import { DialogData } from '../search-bar/search-bar.component';
 
@@ -45,22 +46,21 @@ export class BookDialog {
   savedBooksService: SavedBooksService = inject(SavedBooksService);
 
   constructor(private formBuilder: FormBuilder) {
-    console.log(this.data.comment);
-    console.log(this.data.rate);
     // Inicializa o formulário com FormBuilder
+    console.log(this.data.author);
     this.myForm = this.formBuilder.group({
       id: [this.data.id],
       title: [this.data.title],
-      authors: [this.data.authors],
+      author: [this.data.author],
       cover: [this.data.cover],
       desc: [this.data.desc],
       comment: [this.data.comment] || ['', Validators.required], // Campo 'name' com validação
       rate: [this.data.rate] || ['', Validators.required], // Campo 'age' com validação
     });
+    console.log(this.myForm);
   }
 
-  editOrPush(newValues: any): void {
-    console.log(this.data.id);
+  editOrPush(newValues: Book): void {
     let dupIndex = this.savedBooksService.savedBooks.findIndex(
       (savedBook) => savedBook.id === this.data.id
     );
@@ -85,11 +85,6 @@ export class BookDialog {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onConfirm(): void {
-    console.log(this.savedBooksService.savedBooks);
     this.dialogRef.close();
   }
 }

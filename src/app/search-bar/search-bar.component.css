@@ -2,9 +2,26 @@
   font-weight: 500;
   color: aqua;
 }
-.top-bar {
+.search-form {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.search-type-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.search-option-span {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+  gap: 5px;
 }
 
 ::ng-deep

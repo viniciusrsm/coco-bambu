@@ -1,6 +1,23 @@
-<mat-grid-list cols="3" rowHeight="1:1.5">
+<mat-grid-list
+  [cols]="cols"
+  rowHeight="300px"
+  (window:resize)="changeCols($event)"
+  gutterSize="10px"
+  [ngStyle]="{
+    display: 'flex',
+    'justify-content': 'space-between',
+    height: '100%',
+    width: gridWidth
+  }"
+>
   <mat-grid-tile
-    style="cursor: pointer; background-color: var(--coco-red)"
+    style="
+      cursor: pointer;
+      background-color: var(--coco-red);
+      max-width: 200px;
+      width: 200px;
+      height: 300px;
+    "
     *ngFor="let bookInfo of savedBooksService.savedBooks"
   >
     <app-book

@@ -2,12 +2,17 @@
   <div class="dialog-title">
     {{ data.title }}
   </div>
+  Autores:
   <div class="authors">
-    {{ data.authors }}
+    {{ this.data.author }}
+  </div>
+  Descrição:
+  <div class="authors">
+    {{ this.data.desc }}
   </div>
   <span class="cover"><img src="{{ data.cover }}" /></span>
   <p>Deixe seu comentário sobre o livro!</p>
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <form class="dialog-form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <textarea class="comment" formControlName="comment"></textarea>
     <span class="rate-span">
       <div class="rate">

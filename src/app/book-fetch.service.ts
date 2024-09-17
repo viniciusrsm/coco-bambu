@@ -8,13 +8,15 @@ import { Observable } from 'rxjs';
 export class BookFetchService {
   constructor(private http: HttpClient) {}
 
-  getAllBooks(title: string): Observable<any> {
-    return this.http.get(
-      `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}`
-    );
+  getAllBooks(search: string, type: string): Observable<any> {
+    console.log(type);
+    console.log(search);
+    return type === 'title'
+      ? this.http.get(
+          `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}`
+        )
+      : this.http.get(
+          `https://www.googleapis.com/books/v1/volumes?q=inauthor:${search}`
+        );
   }
-
-  /* getBookById(id: number): Book | undefined {
-    return this.bookInfoList.find((book) => book.id === id);
-  } */
 }

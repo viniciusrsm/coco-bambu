@@ -1,11 +1,11 @@
-<form class="top-bar">
-  <mat-form-field>
+<form class="search-form">
+  <mat-form-field style="width: 100%">
     <input
       class="search-input"
       type="text"
       placeholder="Pesquisar livro"
       matInput
-      [formControl]="myControl"
+      [formControl]="searchControl"
       [matAutocomplete]="auto"
     />
     <mat-autocomplete
@@ -19,4 +19,30 @@
       }
     </mat-autocomplete>
   </mat-form-field>
+  <div class="search-type-div">
+    Buscar por:
+    <span class="search-option-span">
+      <input
+        style="margin: 0"
+        type="radio"
+        id="title"
+        name="search-type"
+        value="title"
+        checked
+        [formControl]="typeControl"
+      />
+      <label for="title">Título</label><br />
+    </span>
+    <span class="search-option-span">
+      <input
+        style="margin: 0"
+        type="radio"
+        id="author"
+        name="search-type"
+        value="author"
+        [formControl]="typeControl"
+      />
+      <label for="author">Autor</label><br />
+    </span>
+  </div>
 </form>
