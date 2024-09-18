@@ -7,6 +7,7 @@
 - **Busca de livros:** Pesquise livros por título ou autor.
 - **Exibição detalhada:** Visualize informações detalhadas sobre cada livro, como título, autor, descrição e capa.
 - **Salvar livros:** Salve livros para avaliá-los ou para rever suas avaliações anteriores.
+- **Filtrar livros:** Filtre os livros salvos baseado em tags que você mesmo pode criar.
 
 ## Tecnologias Utilizadas
 
@@ -30,19 +31,18 @@ Antes de rodar o projeto, certifique-se de ter instalado o seguinte:
    ```bash
    https://github.com/viniciusrsm/coco-bambu.git
    ```
-   
+
 2. Execute o comando de primeira execução:
-    
-    ```bash
+   ```bash
    npm run first-run
    ```
-   
-   
+
 - Este comando irá executar os dois comandos abaixo, que irão instalar todas as dependências e executar o projeto. Caso queira somente executar, utilizar o apenas o último comando
-   ```bash
-   npm install
-   ng serve
-   ```
+  ```bash
+  npm install
+  ng serve
+  ```
 
 ## Como contribuir
+
 - É possível contribuir ao projeto através de um Pull Request feito a partir de um fork da branch main.

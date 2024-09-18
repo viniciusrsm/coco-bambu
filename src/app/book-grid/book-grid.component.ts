@@ -1,8 +1,12 @@
-import { NgFor, NgStyle } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf, NgStyle } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { Book } from '../book';
+import { MatInputModule } from '@angular/material/input';
+import { map, Observable, startWith, tap } from 'rxjs';
 import { BookDialog } from '../book-dialog/book-dialog.component';
 import { BookFetchService } from '../book-fetch.service';
 import { BookComponent } from '../book/book.component';
@@ -11,21 +15,52 @@ import { SavedBooksService } from '../saved-books.service';
 @Component({
   selector: 'app-book-grid',
   standalone: true,
-  imports: [MatGridListModule, BookComponent, NgFor, BookDialog, NgStyle],
+  imports: [
+    MatGridListModule,
+    BookComponent,
+    NgFor,
+    BookDialog,
+    NgStyle,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    AsyncPipe,
+    MatInputModule,
+    NgIf,
+  ],
   templateUrl: './book-grid.component.html',
 })
-export class BookGridComponent {
-  bookInfoList: Book[] = [];
+export class BookGridComponent implements OnInit {
   bookFetchService: BookFetchService = inject(BookFetchService);
   savedBooksService: SavedBooksService = inject(SavedBooksService);
   dialog = inject(MatDialog);
   cols: number = 6;
   gridWidth: string = '1200px';
+  filterControl = new FormControl<string>('');
+  filteredTags: Observable<string[]> | undefined;
 
   constructor() {}
 
+  ngOnInit() {
+    this.filteredTags = this.filterControl.valueChanges.pipe(
+      startWith(''),
+      map((tag) => {
+        return this._filter(tag || '');
+      }),
+      tap((tags) => this.savedBooksService.changeDisplay(tags))
+    );
+  }
+
+  private _filter(tag: string): string[] {
+    const filterTag = tag.toLowerCase();
+
+    return this.savedBooksService.tags.filter((option) => {
+      return option.toLowerCase().includes(filterTag);
+    });
+  }
+
   changeCols(e: any): void {
-    //console.log(this.gridWidth);
     const wid: number = e.target.innerWidth;
     if (wid <= 500) this.cols = 1;
     else if (wid <= 600) this.cols = 2;
@@ -35,11 +70,10 @@ export class BookGridComponent {
     else this.cols = 6;
     this.gridWidth != `${200 * this.cols}px` &&
       (this.gridWidth = `${200 * this.cols}px`);
-    //this.cols = e.target.innerWidth <= 400 ? 1 : 6;
   }
 
   openBook(bookInfo: any): void {
-    const dialogRef = this.dialog.open(BookDialog, {
+    this.dialog.open(BookDialog, {
       data: {
         id: bookInfo['id'],
         author: bookInfo['author'],
@@ -48,6 +82,7 @@ export class BookGridComponent {
         cover: bookInfo['cover'],
         rate: bookInfo['rate'],
         comment: bookInfo['comment'],
+        tag: bookInfo['tag'],
       },
     });
   }

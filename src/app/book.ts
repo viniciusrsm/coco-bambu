@@ -6,4 +6,5 @@ export interface Book {
   desc: string;
   comment: string;
   rate: string;
+  tag: string;
 }

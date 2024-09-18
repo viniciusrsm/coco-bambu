@@ -9,8 +9,6 @@ export class BookFetchService {
   constructor(private http: HttpClient) {}
 
   getAllBooks(search: string, type: string): Observable<any> {
-    console.log(type);
-    console.log(search);
     return type === 'title'
       ? this.http.get(
           `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}`

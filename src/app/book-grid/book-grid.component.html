@@ -1,29 +1,52 @@
-<mat-grid-list
-  [cols]="cols"
-  rowHeight="300px"
-  (window:resize)="changeCols($event)"
-  gutterSize="10px"
-  [ngStyle]="{
-    display: 'flex',
-    'justify-content': 'space-between',
-    height: '100%',
-    width: gridWidth
-  }"
+<div
+  style="width: fit-content; margin-top: 30px; height: fit-content; top: auto"
 >
-  <mat-grid-tile
-    style="
-      cursor: pointer;
-      background-color: var(--coco-red);
-      max-width: 200px;
-      width: 200px;
-      height: 300px;
-    "
-    *ngFor="let bookInfo of savedBooksService.savedBooks"
+  <div class="">
+    <mat-form-field>
+      <input
+        class="search-input"
+        type="text"
+        placeholder="Filtrar por tags..."
+        matInput
+        [formControl]="filterControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        @for (tag of filteredTags | async; track tag) {
+        <mat-option *ngIf="tag != ''" class="option" [value]="tag">{{
+          tag
+        }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <mat-grid-list
+    [cols]="cols"
+    rowHeight="300px"
+    (window:resize)="changeCols($event)"
+    gutterSize="10px"
+    [ngStyle]="{
+      display: 'flex',
+      'justify-content': 'space-between',
+      height: '100%',
+      width: gridWidth
+    }"
   >
-    <app-book
-      style="height: 100%; width: 100%"
-      (click)="openBook(bookInfo)"
-      [bookInfo]="bookInfo"
-    ></app-book>
-  </mat-grid-tile>
-</mat-grid-list>
+    <mat-grid-tile
+      style="
+        cursor: pointer;
+        background-color: var(--coco-red);
+        max-width: 200px;
+        width: 200px;
+        height: 300px;
+      "
+      *ngFor="let bookInfo of this.savedBooksService.displayedBooks"
+    >
+      <app-book
+        style="height: 100%; width: 100%"
+        (click)="openBook(bookInfo)"
+        [bookInfo]="bookInfo"
+      ></app-book>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

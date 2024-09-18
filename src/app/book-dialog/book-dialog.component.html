@@ -4,17 +4,58 @@
   </div>
   Autores:
   <div class="authors">
-    {{ this.data.author }}
+    {{ data.author }}
   </div>
   Descrição:
   <div class="authors">
-    {{ this.data.desc }}
+    {{ data.desc }}
   </div>
   <span class="cover"><img src="{{ data.cover }}" /></span>
-  <p>Deixe seu comentário sobre o livro!</p>
-  <form class="dialog-form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
-    
-    <textarea tabindex="-1" class="comment" formControlName="comment"></textarea>
+  <p>Crie sua tag inserindo no campo e clicando no botão!</p>
+  <form class="dialog-form" [formGroup]="dialogForm" (ngSubmit)="onSubmit()">
+    <div class="tag-div">
+      <span class="tag-lbl-span">
+        <p>Tag:</p>
+      </span>
+
+      <div class="tag-form-field">
+        <mat-form-field>
+          <input
+            class="tag-input"
+            type="text"
+            placeholder="Nome da tag"
+            matInput
+            [formControl]="$any(dialogForm.controls['tag'])"
+            [matAutocomplete]="auto"
+            tabindex="-1"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            @for (tag of filteredTags | async ; track tag) {
+            <mat-option *ngIf="tag != ''" class="option" [value]="tag">{{
+              tag
+            }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <span class="tag-btn-span">
+        <button class="tag-btn" type="button" (click)="handleTag()">
+          Criar tag
+        </button>
+      </span>
+    </div>
+    <div
+      [ngStyle]="{ display: tagErrorMsg ? 'block' : 'none' }"
+      class="tag-warning"
+    >
+      {{ tagErrorMsg }}
+    </div>
+    <p>Deixe sua avaliação!</p>
+    <textarea
+      tabindex="-1"
+      class="comment"
+      formControlName="comment"
+    ></textarea>
     <span class="rate-span">
       <div class="rate">
         <input type="radio" id="star5" formControlName="rate" value="5" />

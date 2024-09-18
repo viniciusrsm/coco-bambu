@@ -1,14 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { AsyncPipe, NgIf, NgStyle } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -17,6 +19,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { map, Observable, startWith } from 'rxjs';
 import { Book } from '../book';
 import { SavedBooksService } from '../saved-books.service';
 import { DialogData } from '../search-bar/search-bar.component';
@@ -36,28 +39,50 @@ import { DialogData } from '../search-bar/search-bar.component';
     MatDialogActions,
     MatDialogClose,
     ReactiveFormsModule,
+    MatAutocompleteModule,
+    AsyncPipe,
+    NgStyle,
+    NgIf,
   ],
 })
-export class BookDialog {
+export class BookDialog implements OnInit {
   readonly dialogRef = inject(MatDialogRef<BookDialog>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  myForm: FormGroup;
+  dialogForm: FormGroup;
+  filteredTags: Observable<string[]> | undefined;
+  tagErrorMsg: string = '';
 
   savedBooksService: SavedBooksService = inject(SavedBooksService);
 
-  constructor(private formBuilder: FormBuilder) {
-    // Inicializa o formulário com FormBuilder
-    console.log(this.data.author);
-    this.myForm = this.formBuilder.group({
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {
+    this.dialogForm = this.formBuilder.group({
       id: [this.data.id],
       title: [this.data.title],
       author: [this.data.author],
       cover: [this.data.cover],
       desc: [this.data.desc],
-      comment: [this.data.comment] || ['', Validators.required], // Campo 'name' com validação
-      rate: [this.data.rate] || ['', Validators.required], // Campo 'age' com validação
+      comment: [this.data.comment] || [''],
+      rate: [this.data.rate] || [''],
+      tag: this.data.tag ? [this.data.tag!] : [''],
     });
-    console.log(this.myForm);
+  }
+
+  ngOnInit() {
+    //const tagValue: FormControl<string | null> = this.dialogForm.controls['tag'];
+    this.filteredTags = this.dialogForm.controls['tag'].valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value || '');
+      })
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.savedBooksService.tags.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 
   editOrPush(newValues: Book): void {
@@ -71,20 +96,33 @@ export class BookDialog {
   }
 
   onSubmit() {
-    if (this.myForm.valid) {
-      const formData = this.myForm.value;
+    if (
+      !this.savedBooksService.tags.includes(this.dialogForm.value['tag']) &&
+      this.dialogForm.value['tag'] != ''
+    ) {
+      this.tagErrorMsg = 'Esta tag não existe.';
+    } else if (this.dialogForm.valid) {
+      const formData = this.dialogForm.value;
 
       this.editOrPush(formData);
+      this.savedBooksService.changeDisplay(null);
 
       this.dialogRef.close();
 
-      this.myForm.reset();
+      this.dialogForm.reset();
     } else {
-      console.log('Formulário inválido');
+      console.error('Formulário inválido');
     }
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  handleTag(): void {
+    let currTag = this.dialogForm.value['tag'];
+    if (currTag) {
+      const tagExists = this.savedBooksService.tags.findIndex(
+        (tag) => tag === currTag
+      );
+      if (tagExists == -1) this.savedBooksService.tags.push(currTag);
+      else this.tagErrorMsg = 'Esta tag já existe';
+    }
   }
 }

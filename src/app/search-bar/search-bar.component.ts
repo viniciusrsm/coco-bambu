@@ -22,15 +22,17 @@ import {
 import { Book } from '../book';
 import { BookDialog } from '../book-dialog/book-dialog.component';
 import { BookFetchService } from '../book-fetch.service';
+import { SavedBooksService } from '../saved-books.service';
 
 export interface DialogData {
   id: string;
   title: string;
-  author: string[];
-  desc: string;
-  cover: string;
-  comment: string;
-  rate: string;
+  author: string[] | null;
+  desc: string | null;
+  cover: string | null;
+  comment: string | null;
+  rate: string | null;
+  tag: string | null;
 }
 
 @Component({
@@ -60,6 +62,7 @@ export class SearchBarComponent implements OnInit {
 
   dialog = inject(MatDialog);
   bookFetchService: BookFetchService = inject(BookFetchService);
+  savedBooksService: SavedBooksService = inject(SavedBooksService);
   booksReady$ = this.booksReadySubject.asObservable();
 
   constructor() {}
@@ -119,7 +122,6 @@ export class SearchBarComponent implements OnInit {
         }),
         take(1),
         tap(() => {
-          console.log(this.books[title][1]);
           if (this.books[title]) {
             this.dialog.open(BookDialog, {
               data: {
